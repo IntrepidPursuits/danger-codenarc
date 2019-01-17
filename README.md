@@ -12,7 +12,7 @@ To use this plugin, you need to generate a xml report file using CodeNarc for th
 
   Methods and attributes from this plugin are available in your `Dangerfile` under the `codenarc` namespace.
 
-    codenard.report('CodeNarcXmlReport.xml')
+    codenarc.report('CodeNarcXmlReport.xml')
   
 
 ## Development
