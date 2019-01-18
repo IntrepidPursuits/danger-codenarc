@@ -22,3 +22,4 @@ To use this plugin, you need to generate a xml report file using CodeNarc for th
 3. Run `bundle exec rake spec` to run the tests.
 4. Use `bundle exec guard` to automatically have tests run as you make changes.
 5. Make your changes.
+

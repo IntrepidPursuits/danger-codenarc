@@ -6,6 +6,7 @@ module Danger
       expect(Danger::DangerCodenarc.new(nil)).to be_a Danger::Plugin
     end
 
+    # TODO: Add more ... ya know... tests.
     describe "with Dangerfile" do
       before do
         @dangerfile = testing_dangerfile

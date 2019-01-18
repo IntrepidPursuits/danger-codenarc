@@ -55,7 +55,7 @@ module Danger
       p1_count = pkg_summary.attr("priority1")
       p2_count = pkg_summary.attr("priority2")
       p3_count = pkg_summary.attr("priority3")
-      summary = "CodeNarc scanned #{tf} files. Found #{fwv} files with violations. #{p1_count} P1 violations, #{p2_count} violations, and #{p3_count} P3 violations"
+      summary = "CodeNarc scanned #{tf} files. Found #{fwv} files with violations. #{p1_count} P1 violations, #{p2_count} P2 violations, and #{p3_count} P3 violations"
       message(summary, sticky: sticky_summary)
 
       # Iterate Packages
@@ -69,9 +69,9 @@ module Danger
             rule = violation.attr("ruleName")
             is_err = (priority == 1)
 
-            violation_text = violation.xpath("Message")[0].text
-            source_line = violation.xpath("SourceLine")[0].text
-            violation_message = "#{package_path}/#{filename}#L#{line_num} - P#{priority} [#{rule}] - #{violation_text}\n'#{source_line}'"
+            violation_text = violation.xpath("Message")[0].text.strip!
+            source_line = "    #{violation.xpath("SourceLine")[0].text.strip!}"
+            violation_message = "#{package_path}/#{filename}#L#{line_num} - P#{priority} [#{rule}] - #{violation_text}\n#{source_line}"
 
             if is_err
               fail(violation_message, sticky: false)
