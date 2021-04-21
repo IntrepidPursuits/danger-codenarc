@@ -33,6 +33,14 @@ module Danger
       @sticky_summary || false
     end
 
+    # Defines if the test summary will be skipped or not.
+    # Defaults to `false`.
+    # @return   [Boolean] skip
+    attr_accessor :skip_summary
+    def skip_summary
+      @skip_summary || false
+    end
+
     # Reads a puppet-lint summary file and reports it.
     #
     # @param    [String] file_path Path for puppet-lint report.
@@ -49,14 +57,16 @@ module Danger
       doc = Nokogiri::XML(File.open(report_file))
 
       # Create Summary
-      pkg_summary = doc.xpath("//PackageSummary")[0]
-      tf = pkg_summary.attr("totalFiles")
-      fwv = pkg_summary.attr("filesWithViolations")
-      p1_count = pkg_summary.attr("priority1")
-      p2_count = pkg_summary.attr("priority2")
-      p3_count = pkg_summary.attr("priority3")
-      summary = "CodeNarc scanned #{tf} files. Found #{fwv} files with violations. #{p1_count} P1 violations, #{p2_count} P2 violations, and #{p3_count} P3 violations"
-      message(summary, sticky: sticky_summary)
+      unless skip_summary
+        pkg_summary = doc.xpath("//PackageSummary")[0]
+        tf = pkg_summary.attr("totalFiles")
+        fwv = pkg_summary.attr("filesWithViolations")
+        p1_count = pkg_summary.attr("priority1")
+        p2_count = pkg_summary.attr("priority2")
+        p3_count = pkg_summary.attr("priority3")
+        summary = "CodeNarc scanned #{tf} files. Found #{fwv} files with violations. #{p1_count} P1 violations, #{p2_count} P2 violations, and #{p3_count} P3 violations"
+        message(summary, sticky: sticky_summary)
+      end
 
       # Iterate Packages
       doc.xpath("//Package").each do |pack_el|
