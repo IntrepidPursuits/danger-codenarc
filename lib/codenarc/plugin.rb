@@ -18,7 +18,7 @@ module Danger
     # The project root, which will be used to make the paths relative.
     # Defaults to `pwd`.
     # @return   [String] project_root value
-    # attr_accessor :project_root
+    attr_accessor :project_root
     def project_root
       root = @project_root || Dir.pwd
       root += "/" unless root.end_with? "/"
@@ -28,7 +28,7 @@ module Danger
     # Defines if the test summary will be sticky or not.
     # Defaults to `false`.
     # @return   [Boolean] sticky
-    # attr_accessor :sticky_summary
+    attr_accessor :sticky_summary
     def sticky_summary
       @sticky_summary || false
     end
